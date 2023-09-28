@@ -20,7 +20,11 @@ public:
         this->id = id;
         this->sal = sal;
     }
-    
+    void setEmployee(int id,float sal)
+    {
+        this->id=id;
+        this->sal=sal;
+    }
     void setId(int id)
     {
         cout<<"*********ID Updated*********"<<endl;
@@ -70,9 +74,15 @@ class Manager : virtual public Employee
         this->bonus=0.0;
         //cout<<"Inside Manager Ctor"<<endl;
     }
-    Manager(float bonus)
+    Manager(int id,float sal,float bonus)
     {
+        Employee(id,sal);
         this->bonus = bonus;
+    }
+    void setManager(int id,float sal,float bonus)
+    {
+        Employee::setEmployee(id,sal);
+        this->bonus=bonus;
     }
     
     void setBonus(float bonus)
@@ -138,7 +148,7 @@ class Salesman : virtual public Employee
 
         void setCommission(float commission)
         {
-            cout<<"*********Commission Updated*********"<<endl;
+           // cout<<"*********Commission Updated*********"<<endl;
             this->commission=commission;
         }
         float getCommission()
@@ -190,9 +200,10 @@ class Sales_Manager : public Manager,public Salesman
         //cout<<"Inside Sales_Manager Ctor"<<endl;
     }
 
-    Sales_Manager(int ,float  ,float  ,float )
+    Sales_Manager(int id ,float sal  ,float bonus ,float commission )
     {
-        
+        Manager::setManager(id,sal,bonus);
+        Salesman::setCommission(commission);
     }
 
     void accept()
@@ -204,7 +215,7 @@ class Sales_Manager : public Manager,public Salesman
     }
     void display()
     {
-        cout<<"*******SalesManager Details*******" <<endl;
+        //cout<<"*******SalesManager Details*******" <<endl;
 
         Manager::display_manager();
         Salesman::display_Salesman();
@@ -214,13 +225,14 @@ class Sales_Manager : public Manager,public Salesman
 
 int main()
 {
+   //Sales_Manager s(12,90000,456,566);
    Sales_Manager s;
    s.accept();
    s.display();   
 
-   s.setId(80219);
-   s.setBonus(6999);
-   s.setCommission(4999);
-   s.display();   
+//    s.setId(80219);
+//    s.setBonus(6999);
+//    s.setCommission(4999);
+//    s.display();   
 
 }
