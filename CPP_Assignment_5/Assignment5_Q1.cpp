@@ -1,78 +1,175 @@
-#include<iostream>
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string>
 using namespace std;
-class Student
-{
-    private:
-        string name;
-        string gender;
-        int rollno;
-        int m1;
-        int m2;
-        int m3;
-    public:
 
-    // Student(string name,string gender,int rollno,int m1,int m2,int m3)
-    // {
-    //     this->name=name;
-    //     this->gender=gender;
-    //     this->rollno=rollno;
-    //     this->m1=m1;
-    //     this->m2=m2;
-    //     this->m3=m3;
-    // }
-    void acceptData()
+class student
+{
+private:
+    string name;
+    string gender;
+    int rollNumber;
+    int m1;
+    int m2;
+    int m3;
+
+public:
+    student()
     {
-        cout<<"Enter Name : ";
-        cin>>this->name;
-        cout<<"Enter Roll Number : ";
-        cin>>this->rollno;
-        cout<<"Enter Gender : ";
-        cin>>this->gender;
-        cout<<"Enter Marks of fisrt subject : ";
-        cin>>this->m1;
-        cout<<"Enter Marks of second subject : ";
-        cin>>this->m2;
-        cout<<"Enter Marks of third subject : ";
-        cin>>this->m3;
+        this->name = "";
+        this->gender = "";
+        this->rollNumber = 0;
+        this->m1 = 1;
+        this->m2 = 1;
+        this->m3 = 1;
     }
-    void display()
+    student(string name, string gender, int rollNumber, int m1, int m2, int m3)
     {
-        cout<<"Name : "<<this->name<<endl;
-        cout<<"Roll Number : "<<this->rollno<<endl;
-        cout<<"Gender : "<<this->gender<<endl;
-        cout<<"Percentage : "<<((this->m1+this->m2+this->m3)/3)<<"%"<<endl;
+        this->name = name;
+        this->gender = gender;
+        this->rollNumber = rollNumber;
+        this->m1 = m1;
+        this->m2 = m2;
+        this->m3 = m3;
+    }
+    void acceptStudent()
+    {
+        cout << "Enter student name: ";
+        cin >> this->name;
+        cout << "Enter student gender: ";
+        cin >> this->gender;
+        cout << "Enter student roll number: ";
+        cin >> this->rollNumber;
+        cout << "Enter students marks in m1: ";
+        cin >> this->m1;
+        cout << "Enter students marks in m2: ";
+        cin >> this->m2;
+        cout << "Enter students marks in m3: ";
+        cin >> this->m3;
+    }
+    void displayStudent()
+    {
+        float percentage;
+        int total = 300;
+        percentage = (m1 + m2 + m3) * 100 / total;
+        cout << "**********************************" << endl;
+        cout << "Students Information" << endl;
+        cout << "Student Name: " << this->name << endl;
+        cout << "Student Gender: " << this->gender << endl;
+        cout << "Student Roll Number: " << this->rollNumber << endl;
+        cout << "M1 marks: " << this->m1 << endl;
+        cout << "M2 marks: " << this->m2 << endl;
+        cout << "M3 marks: " << this->m3 << endl;
+        cout << "Student Percentages: " << percentage << endl;
+        cout << "**********************************" << endl;
+    }
+    int getRollNumber()
+    {
+        return rollNumber;
     }
 };
 
-int searchRecords(Student[2])
+void sortRecords(student arr[], int size)
 {
-    for(int i=0;i<2;i++)
+    for (int i = 0; i < size - 1; ++i)
     {
-        
+        for (int j = 0; j < size - i - 1; ++j)
+        {
+            if (arr[j].getRollNumber() > arr[j + 1].getRollNumber())
+            {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+    for (int i = 0; i < size; i++)
+    {
+        cout << arr[i].getRollNumber() << endl;
     }
 }
+
+int searchRecords(student arr[], int size, int rollNumber)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (rollNumber == arr[i].getRollNumber())
+        {
+            return i;
+            break;
+        }
+    }
+    return -1;
+}
+
+enum Emenu
+{
+    EXIT,
+    ADD,
+    PRINT,
+    SORT,
+    SEARCH
+};
+
+Emenu menu()
+{
+    int choice;
+    cout << "***************************" << endl;
+    cout << "0) EXIT." << endl;
+    cout << "1) ADD STUDENT." << endl;
+    cout << "2) PRINT STUDENT." << endl;
+    cout << "3) SORT BY ROLL NUMBERS." << endl;
+    cout << "4) SEARCH STUDENT BY ROLL NUMBER." << endl;
+    cout << "ENTER YOUR CHOICE: ";
+    cin >> choice;
+    return Emenu(choice);
+}
+
 int main()
 {
-    //Student s("Vinayak","Male",80219,90,84,78);
-    //s.display();
-
-    Student **st = new Student*[2];
-
-    for(int i=0;i<2;i++)
+    int size;
+    int rollcall;
+    cout << "Number of students you want to add: ";
+    cin >> size;
+    student arr[size];
+    Emenu choice;
+    while ((choice = menu()) != EXIT)
     {
-        st[i] = new Student();
+        switch (choice)
+        {
+        case EXIT:
+            cout << "Exiting......" << endl;
+            break;
+        case ADD:
+            for (int i = 0; i < size; i++)
+            {
+                arr[i].acceptStudent();
+            }
+            break;
+        case PRINT:
+            for (int i = 0; i < size; i++)
+            {
+                arr[i].displayStudent();
+            }
+            break;
+        case SORT:
+            cout << "sorted rolls as: " << endl;
+            sortRecords(arr, size);
+            break;
+        case SEARCH:
+            cout << "Enter roll you want to search: ";
+            cin >> rollcall;
+            int index = searchRecords(arr, size, rollcall);
+            if (index != -1)
+            {
+                cout << "Student found at index: " << index << endl;
+                arr[index].displayStudent();
+            }
+            else
+            {
+                cout << "Student not found......." << endl;
+            }
+            break;
+        }
     }
-    for(int i=0;i<2;i++)
-    {
-        st[i]->acceptData();
-    }
 
-    for(int i=0;i<2;i++)
-    {
-        st[i]->display();
-    }
-
-     searchRecords( *st);
-
-
+    return 0;
 }
