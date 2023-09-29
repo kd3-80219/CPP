@@ -48,7 +48,7 @@ int searchRecords(Student[2])
 {
     for(int i=0;i<2;i++)
     {
-        i
+        
     }
 }
 int main()
