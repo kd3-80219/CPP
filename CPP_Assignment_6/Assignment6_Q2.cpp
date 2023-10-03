@@ -229,7 +229,7 @@ int main()
    Sales_Manager s;
    s.accept();
    s.display();   
-
+}
 //    s.setId(80219);
 //    s.setBonus(6999);
 //    s.setCommission(4999);

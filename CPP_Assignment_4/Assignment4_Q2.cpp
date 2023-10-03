@@ -15,7 +15,7 @@ class stack
         }
         stack(int size)
         {
-            this->size=-1;
+            this->top=-1;
             if(size!=0)
             {
                 this->arr = new int[size];

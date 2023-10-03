@@ -23,7 +23,7 @@ class matrix
         this->matrix2 = new int *[row];
         for(int i=0;i<row;i++)
         {
-                this->matrix1[i] = new int [col];   
+            this->matrix1[i] = new int [col];   
         }
         for(int i=0;i<row;i++)
         {
